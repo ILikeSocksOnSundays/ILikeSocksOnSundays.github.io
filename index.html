@@ -14,7 +14,7 @@
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 
-  <title>subscriptionsplitter</title>
+  <title>Subscription Splitter</title>
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
@@ -28,6 +28,25 @@
       });
     }
   </script>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId            : '1840461782755241',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v6.0'
+      });
+
+      (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+    };
+  </script>
+  <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>
