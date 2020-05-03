@@ -1,52 +1,150 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--
+	Fractal by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Split Netflix Subscription">
-
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="subscriptionsplitter">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
-
-  <title>Subscription Splitter</title>
-  <link rel="manifest" href="manifest.json">
+	<title>Subscription Splitter</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
-<body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js');
-      });
-    }
-  </script>
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId            : '1840461782755241',
-        autoLogAppEvents : true,
-        xfbml            : true,
-        version          : 'v6.0'
-      });
 
-      (function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-    };
-  </script>
-  <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
-  <script src="main.dart.js" type="application/javascript"></script>
+<body class="is-preload">
+
+	<!-- Header -->
+	<header id="header">
+		<div class="content">
+			<h1><a href="#">SubSplitter</a></h1>
+			<p>Share<br />
+				<img style="width:150px;" src='images/netflix.png' /><br />
+				$5/month</p>
+			<button id="checkout-button-sku_FsOEdOhtL4tanv" role="link"
+				class="button primary icon solid fa-download">Try it now!</button>
+		</div>
+		<div class="image">
+			<div class="inner"><img src="images/splitterTurned.png" alt="" /></div>
+		</div>
+	</header>
+
+	<!-- One -->
+	<section id="one" class="wrapper style2 special">
+		<header class="major">
+			<h2>How does this work?</h2>
+		</header>
+		<p>We split premium Netflix accounts.</p>
+		<p>Simply submit your email and pay to become an add-on user with full privileges.</p>
+	</section>
+
+	<!-- Two -->
+	<section id="two" class="wrapper">
+		<div class="inner alt">
+			<section class="spotlight">
+				<div class="image"><img src="images/One.png" alt="" /></div>
+				<div class="content">
+					<h3>Step 1:</h3>
+					<p>Click Try it Now and enter valid email.</p>
+				</div>
+			</section>
+			<section class="spotlight">
+				<div class="image"><img src="images/Two.png" alt="" /></div>
+				<div class="content">
+					<h3>Step 2:</h3>
+					<p>Pay only $5.</p>
+				</div>
+			</section>
+			<section class="spotlight">
+				<div class="image"><img src="images/Three.png" alt="" /></div>
+				<div class="content">
+					<h3>Step 3:</h3>
+					<p>Receive Netflix Login Credentials instantly.</p>
+				</div>
+			</section>
+		</div>
+	</section>
+
+	<!-- Three -->
+	<section id="three" class="wrapper style2 special">
+		<header class="major">
+			<h2>Let's do it!</h2>
+			<p>It's time to split the bill.</p>
+		</header>
+		<button id="checkout-button-sku_FsOEdOhtL4tanv" role="link" class="button primary icon solid fa-download">Try it
+			now!</button>
+	</section>
+
+	<!-- Footer -->
+	<footer id="footer">
+		<ul class="icons">
+			<li><a href="https://www.facebook.com/SubSplitter-101005504939435" class="icon brands fa-facebook-f"><span
+						class="label">Facebook</span></a></li>
+		</ul>
+		<p class="copyright">&copy; Subscription Splitter 2020. Credits: <a href="http://html5up.net">HTML5 UP</a></p>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<!-- Load Stripe.js on your website. -->
+	<script src="https://js.stripe.com/v3"></script>
+	<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+	<script>
+		(function () {
+			var stripe = Stripe('pk_live_FumJoOhlsyEJ7PiO9kffN1jI');
+
+			var checkoutButton = document.getElementById('checkout-button-sku_FsOEdOhtL4tanv');
+			checkoutButton.addEventListener('click', function () {
+				// When the customer clicks on the button, redirect
+				// them to Checkout.
+				stripe.redirectToCheckout({
+					items: [{ plan: 'plan_HBNLu7aOEC3e90', quantity: 1 }],
+
+					// Do not rely on the redirect to the successUrl for fulfilling
+					// purchases, customers may not always reach the success_url after
+					// a successful payment.
+					// Instead use one of the strategies described in
+					// https://stripe.com/docs/payments/checkout/fulfillment
+					successUrl: 'https://subscriptionsplitter.com/success.html',
+					cancelUrl: 'https://subscriptionsplitter.com/',
+				})
+					.then(function (result) {
+						if (result.error) {
+							// If `redirectToCheckout` fails due to a browser or network
+							// error, display the localized error message to your customer.
+							var displayError = document.getElementById('error-message');
+							displayError.textContent = result.error.message;
+						}
+					});
+			});
+		})();
+
+		window.fbAsyncInit = function () {
+			FB.init({
+				appId: '1840461782755241',
+				autoLogAppEvents: true,
+				xfbml: true,
+				version: 'v6.0'
+			});
+
+			(function (d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		};
+
+	</script>
 </body>
+
 </html>
