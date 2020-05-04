@@ -74,7 +74,7 @@
 			<h2>Let's do it!</h2>
 			<p>It's time to split the bill.</p>
 		</header>
-		<button id="checkout-button-sku_FsOEdOhtL4tanv" role="link" class="button primary icon solid fa-download">Try it
+		<button id="checkout-button2-sku_FsOEdOhtL4tanv" role="link" class="button primary icon solid fa-download">Try it
 			now!</button>
 	</section>
 
@@ -102,6 +102,31 @@
 
 			var checkoutButton = document.getElementById('checkout-button-sku_FsOEdOhtL4tanv');
 			checkoutButton.addEventListener('click', function () {
+				// When the customer clicks on the button, redirect
+				// them to Checkout.
+				stripe.redirectToCheckout({
+					items: [{ plan: 'plan_HBNLu7aOEC3e90', quantity: 1 }],
+
+					// Do not rely on the redirect to the successUrl for fulfilling
+					// purchases, customers may not always reach the success_url after
+					// a successful payment.
+					// Instead use one of the strategies described in
+					// https://stripe.com/docs/payments/checkout/fulfillment
+					successUrl: 'https://subscriptionsplitter.com/success.html',
+					cancelUrl: 'https://subscriptionsplitter.com/',
+				})
+					.then(function (result) {
+						if (result.error) {
+							// If `redirectToCheckout` fails due to a browser or network
+							// error, display the localized error message to your customer.
+							var displayError = document.getElementById('error-message');
+							displayError.textContent = result.error.message;
+						}
+					});
+			});
+
+			var checkoutButton2 = document.getElementById('checkout-button2-sku_FsOEdOhtL4tanv');
+			checkoutButton2.addEventListener('click', function () {
 				// When the customer clicks on the button, redirect
 				// them to Checkout.
 				stripe.redirectToCheckout({
